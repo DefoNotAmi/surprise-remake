@@ -1,407 +1,967 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Little Starfire</title>
+
+<title>For My Favorite Human</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600;900&display=swap" rel="stylesheet">
+
 
 <style>
 
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
+
 
 body{
+
     height:100vh;
     overflow:hidden;
+
     background:
-    radial-gradient(circle at 70% 30%, #24356b 0%, transparent 25%),
-    radial-gradient(circle at center,#111936,#02030a 70%);
+    radial-gradient(circle at 50% 20%,#243b68,transparent 35%),
+    radial-gradient(circle at bottom,#15102d,transparent 50%),
+    #02040d;
+
     color:white;
-    font-family:'Segoe UI',sans-serif;
+    font-family:'Orbitron',sans-serif;
+
 }
 
 
-/* étoiles */
+
+/* stars */
 
 .star{
-    position:absolute;
-    width:2px;
-    height:2px;
-    background:white;
-    border-radius:50%;
-    animation:blink 3s infinite;
-}
 
-@keyframes blink{
-    50%{opacity:.2;}
-}
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
 
+animation:twinkle infinite alternate;
 
-/* étoiles du curseur */
-
-.trail{
-    position:absolute;
-    width:6px;
-    height:6px;
-    background:#9fe7ff;
-    border-radius:50%;
-    box-shadow:0 0 20px #9fe7ff;
-    pointer-events:none;
-    animation:trail .8s forwards;
-}
-
-@keyframes trail{
-    to{
-        transform:scale(0);
-        opacity:0;
-    }
 }
 
 
-/* Saturne */
+@keyframes twinkle{
+
+from{
+opacity:.2;
+}
+
+to{
+opacity:1;
+}
+
+}
+
+
+
+/* cursor particles */
+
+
+.particle{
+
+position:absolute;
+width:7px;
+height:7px;
+
+background:#bdeaff;
+
+border-radius:50%;
+
+box-shadow:
+0 0 15px #8bdcff;
+
+pointer-events:none;
+
+animation:explode .9s forwards;
+
+}
+
+
+@keyframes explode{
+
+100%{
+
+transform:
+translateY(-40px)
+scale(0);
+
+opacity:0;
+
+}
+
+}
+
+
+
+
+
+/* planets */
+
+
+.planet{
+
+position:absolute;
+border-radius:50%;
+
+cursor:pointer;
+
+}
+
 
 .saturn{
-    position:absolute;
-    right:-80px;
-    top:10%;
-    width:230px;
-    height:230px;
-    border-radius:50%;
-    background:
-    radial-gradient(circle at 35% 35%,#f8dca0,#b47b45,#4d2d20);
-    box-shadow:0 0 80px rgba(255,190,100,.3);
-    animation:float 8s infinite alternate;
-}
-
-.ring{
-    position:absolute;
-    width:330px;
-    height:80px;
-    border:15px solid rgba(220,180,120,.6);
-    border-radius:50%;
-    top:75px;
-    left:-50px;
-    transform:rotate(-20deg);
-}
 
 
-@keyframes float{
-    from{transform:translateY(0)}
-    to{transform:translateY(25px)}
+width:260px;
+height:260px;
+
+right:-50px;
+top:90px;
+
+
+background:
+radial-gradient(circle at 30% 30%,
+#ffe4a3,
+#b67842,
+#392116);
+
+
+box-shadow:
+0 0 100px #d8a56b;
+
+
 }
 
 
-/* Vaisseau */
+.saturn:after{
+
+content:"";
+
+position:absolute;
+
+width:380px;
+height:90px;
+
+border:18px solid rgba(240,210,150,.5);
+
+border-radius:50%;
+
+left:-60px;
+top:85px;
+
+transform:rotate(-20deg);
+
+}
+
+
+
+.moon{
+
+width:70px;
+height:70px;
+
+background:#aaa;
+
+left:15%;
+top:25%;
+
+box-shadow:0 0 40px #fff;
+
+}
+
+
+
+.blue{
+
+width:100px;
+height:100px;
+
+right:20%;
+bottom:15%;
+
+background:
+radial-gradient(circle,#5de0ff,#203070);
+
+}
+
+
+
+/* ship */
+
 
 .ship{
-    position:absolute;
-    left:-100px;
-    top:35%;
-    font-size:60px;
-    animation:fly 18s linear infinite;
+
+position:absolute;
+
+font-size:55px;
+
+left:-100px;
+top:45%;
+
+animation:travel 20s linear infinite;
+
 }
 
-@keyframes fly{
-    to{
-        left:110%;
-        transform:rotate(5deg);
-    }
+
+@keyframes travel{
+
+
+to{
+
+left:110%;
+
+transform:rotate(8deg);
+
+}
+
 }
 
 
-/* interface */
 
-.center{
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
+
+
+/* UI */
+
+
+.wrapper{
+
+height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
 }
+
 
 
 .panel{
 
-    max-width:650px;
-    text-align:center;
-    padding:40px;
 
-    background:
-    linear-gradient(
-    145deg,
-    rgba(255,255,255,.12),
-    rgba(0,0,0,.55));
+width:min(700px,95%);
 
-    border:1px solid rgba(150,220,255,.35);
-    border-radius:25px;
 
-    backdrop-filter:blur(12px);
+background:
 
-    box-shadow:
-    0 0 50px rgba(100,200,255,.15);
+linear-gradient(
+145deg,
+rgba(255,255,255,.12),
+rgba(0,0,0,.55)
+);
+
+
+border:
+
+1px solid rgba(180,220,255,.4);
+
+
+border-radius:25px;
+
+
+padding:40px;
+
+
+backdrop-filter:blur(15px);
+
+
+box-shadow:
+
+0 0 80px rgba(90,170,255,.2);
+
+
+
+text-align:center;
+
+
 }
+
+
+
+.header{
+
+letter-spacing:8px;
+
+font-size:14px;
+
+opacity:.6;
+
+margin-bottom:30px;
+
+}
+
 
 
 h1{
-    font-size:clamp(30px,7vw,55px);
-    margin-bottom:25px;
+
+font-size:
+clamp(30px,7vw,60px);
+
+
+margin-bottom:30px;
+
 }
 
 
-p{
-    font-size:clamp(17px,3vw,23px);
-    line-height:1.6;
-    min-height:130px;
+
+.message{
+
+
+font-size:
+clamp(16px,3vw,23px);
+
+
+line-height:1.7;
+
+min-height:170px;
+
 }
+
 
 
 button{
 
-    margin-top:20px;
 
-    padding:15px 45px;
+margin-top:25px;
 
-    border-radius:50px;
-    border:none;
+padding:16px 50px;
 
-    background:#b7edff;
 
-    font-weight:bold;
-    font-size:18px;
+background:
 
-    cursor:pointer;
+linear-gradient(90deg,#9be8ff,#ffffff);
 
-    transition:.3s;
+
+border:none;
+
+border-radius:40px;
+
+
+font-family:inherit;
+
+font-weight:bold;
+
+cursor:pointer;
+
+
+transition:.4s;
+
 
 }
+
 
 
 button:hover{
-    transform:scale(1.1);
-    box-shadow:0 0 30px #9fe7ff;
+
+transform:scale(1.08);
+
+box-shadow:
+0 0 40px #9be8ff;
+
 }
 
 
-.hidden{
-    display:none;
-}
 
+.status{
 
-.ghost{
 
 position:absolute;
+
 bottom:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:12px;
+
+opacity:.6;
+
+}
+
+
+
+.popup{
+
+
+position:absolute;
+
+padding:20px;
+
+background:#050817dd;
+
+border:1px solid #7ddcff;
+
+border-radius:15px;
+
+display:none;
+
+}
+
+/* COSMIC TRANSITION */
+
+#cosmicTransition{
+
+position:fixed;
+
+inset:0;
+
+background:
+radial-gradient(circle,#14264d,#02040d 70%);
+
+z-index:999;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:opacity 1s;
+
+}
+
+
+#cosmicTransition.active{
+
+opacity:1;
+
+}
+
+
+
+.scanLine{
+
+position:absolute;
+
+width:0;
+height:2px;
+
+background:#bdeaff;
+
+box-shadow:
+0 0 40px #8bdcff,
+0 0 100px #8bdcff;
+
+
+animation:none;
+
+}
+
+
+#cosmicTransition.active .scanLine{
+
+animation:
+
+scan 2s forwards;
+
+}
+
+
+
+@keyframes scan{
+
+
+0%{
+
+width:0;
+
+}
+
+
+50%{
+
 width:100%;
+
+}
+
+
+100%{
+
+width:0;
+
+}
+
+
+}
+
+
+
+
+.transitionText{
+
 text-align:center;
-opacity:.5;
+
+opacity:0;
+
+transform:scale(.8);
+
+}
+
+
+#cosmicTransition.active .transitionText{
+
+animation:
+
+appear 3s forwards;
+
+}
+
+
+
+.transitionText span{
+
+font-size:13px;
+
+letter-spacing:8px;
+
+opacity:.6;
+
+}
+
+
+
+.transitionText h2{
+
+margin-top:25px;
+
+font-size:
+clamp(25px,5vw,55px);
+
+
+letter-spacing:5px;
+
+}
+
+
+
+@keyframes appear{
+
+
+0%{
+
+opacity:0;
+transform:scale(.8);
+
+}
+
+
+40%{
+
+opacity:1;
+transform:scale(1);
+
+}
+
+
+100%{
+
+opacity:1;
+
+}
+
 
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<div class="saturn">
-<div class="ring"></div>
-</div>
+
+<div class="saturn planet" onclick="planetMessage('saturn')"></div>
+
+<div class="moon planet" onclick="planetMessage('moon')"></div>
+
+<div class="blue planet" onclick="planetMessage('blue')"></div>
 
 
 <div class="ship">
 🚀
 </div>
 
+<!-- COSMIC TRANSITION -->
 
+<div id="cosmicTransition">
 
-<div class="center">
+    <div class="scanLine"></div>
+
+    <div class="transitionText">
+        <span>INCOMING TRANSMISSION</span>
+        <h2 id="transitionMessage">
+            A NEW JOURNEY BEGINS
+        </h2>
+    </div>
+
+</div>
+
+<div class="wrapper">
+
 
 <div class="panel">
 
 
+<div class="header">
+
+PRIVATE COSMIC TRANSMISSION
+
+</div>
+
+
 <h1>
-✨ Guardian ✨
+For You ✦
 </h1>
 
 
-<p id="text">
+<div id="message" class="message">
 
-I don't really want to play destiny...
+I don't think I really want to play destiny...
 
-<br>
+<br><br>
 
-but I want to play with you.
+but I know I want to play with you.
 
-</p>
+</div>
 
 
-<button id="btn">
-Continue
+<button onclick="next()">
+
+CONTINUE
+
 </button>
 
 
 </div>
 
+
 </div>
 
 
-<div class="ghost">
-👻 Ghost scan : "A special Guardian has been found."
+
+<div class="status">
+
+CONNECTED • LOVE SIGNAL STABLE • DISTANCE: 0 LIGHT YEARS
+
 </div>
+
+
+
+<div id="popup" class="popup"></div>
+
 
 
 
 <script>
 
 
-// étoiles du fond
-
-for(let i=0;i<180;i++){
-
-let star=document.createElement("div");
-
-star.className="star";
-
-star.style.left=Math.random()*100+"%";
-star.style.top=Math.random()*100+"%";
-star.style.animationDelay=Math.random()*3+"s";
-
-document.body.appendChild(star);
-
-}
+// create stars
 
 
-
-// étoiles curseur + tactile
-
-function starTrail(x,y){
+for(let i=0;i<250;i++){
 
 let s=document.createElement("div");
 
-s.className="trail";
+s.className="star";
 
-s.style.left=x+"px";
-s.style.top=y+"px";
+s.style.left=Math.random()*100+"%";
+
+s.style.top=Math.random()*100+"%";
+
+s.style.animationDuration=
+(1+Math.random()*4)+"s";
+
 
 document.body.appendChild(s);
-
-setTimeout(()=>s.remove(),800);
 
 }
 
 
-document.addEventListener("mousemove",e=>{
-starTrail(e.clientX,e.clientY);
-});
+
+// cursor effects
 
 
-document.addEventListener("touchmove",e=>{
+function particle(x,y){
+
+let p=document.createElement("div");
+
+p.className="particle";
+
+p.style.left=x+"px";
+
+p.style.top=y+"px";
+
+document.body.appendChild(p);
+
+
+setTimeout(()=>p.remove(),900);
+
+
+}
+
+
+document.addEventListener(
+"mousemove",
+e=>particle(e.clientX,e.clientY)
+);
+
+
+document.addEventListener(
+"touchmove",
+e=>{
 
 let t=e.touches[0];
 
-starTrail(t.clientX,t.clientY);
+particle(t.clientX,t.clientY);
 
-});
+}
+
+);
 
 
 
 
-// histoire
 
-let step=0;
 
-let story=[
+let stage=0;
+
+
+let texts=[
+
 
 `
-Maybe I don't understand every weapon,
-every raid,
-or every legend...
+Maybe I don't understand every universe,
+every adventure,
+or every mystery...
+
+But I want to learn yours.
 
 <br><br>
 
-But I know I want to discover
-the universe with you.
-
-<br><br>
-
-<i>Ghost update: New Fireteam member detected.</i>
+I want to explore the stars
+with my favorite person.
 `,
 
-`
-
-I might pay for Destiny...
-
-<br><br>
-
-Consider it for our anniversary.
-
-Not only because it's a game...
-
-but because it's a little piece
-of your universe that I want to discover.
-
-`,
 
 `
+I might pay for this universe...
 
-Saturn is your favorite planet...
+Maybe for our anniversary.
 
-So if I could choose a place
-for our little adventure,
+Not because of the game.
 
-I'd choose the stars.
-
-Somewhere between Saturn's rings
-and the Traveler's Light.
+Because I want to understand
+something that makes you happy.
 
 `,
 
+
 `
 
-Every Guardian needs a Fireteam.
+So I imagined us somewhere here.
 
-And mine is you.
+Floating between rings,
+stars,
+and impossible dreams.
 
-<br><br>
+`,
 
-❤️ Mission complete:
-<br>
-Stay by your side forever.
+
+`
+Every explorer needs someone
+beside them.
+
+And if you let me...
+
+I'll be in your fireteam,
+through every galaxy.
+
+`,
+
+
+`
+Transmission complete.
+
+Thank you for being
+my favorite place in the universe.
+
+❤️
 
 `
 
 ];
 
 
-let btn=document.getElementById("btn");
-let text=document.getElementById("text");
+
+function next(){
+
+if(stage<texts.length){
+
+document.getElementById("message").innerHTML=
+texts[stage];
+
+stage++;
+
+if(stage === 1){
+
+cosmicTransition(
+"TRANSMISSION ACCEPTED<br><br>ENTERING YOUR UNIVERSE"
+);
+
+}
 
 
-btn.onclick=()=>{
+if(stage === 3){
 
-if(step<story.length){
+cosmicTransition(
+"NEW COORDINATES FOUND<br><br>SATURN ORBIT LOCKED"
+);
 
-text.innerHTML=story[step];
+}
 
-step++;
+
+if(stage === 5){
+
+cosmicTransition(
+"FINAL MESSAGE RECEIVED<br><br>YOU ARE MY FAVORITE STAR"
+);
+
+}
 
 }
 
 else{
 
-btn.innerHTML="⭐ End of Mission ⭐";
+document.querySelector("button").innerHTML=
+"TRANSMISSION SAVED ✦";
 
 }
+
+}
+
+
+
+
+// planet secrets
+
+
+function planetMessage(type){
+
+let p=document.getElementById("popup");
+
+
+let messages={
+
+saturn:
+"Saturn archive : The place you chose. A beautiful world deserves a beautiful memory.",
+
+
+moon:
+"Moon signal detected : A small reminder that even lonely places can hold warmth.",
+
+
+blue:
+"Unknown planet : Coordinates locked. Maybe our next adventure."
 
 };
 
 
+p.innerHTML=messages[type];
+
+p.style.display="block";
+
+p.style.left="50%";
+
+p.style.top="20%";
+
+setTimeout(()=>p.style.display="none",4000);
+
+}
+
+
+
+// keyboard easter eggs
+
+
+document.addEventListener(
+"keydown",
+e=>{
+
+
+if(e.key==="g"){
+
+alert(
+"Hidden message : The stars were brighter after I found you."
+);
+
+}
+
+
+if(e.key==="s"){
+
+document.body.style.filter=
+"brightness(1.4)";
+
+setTimeout(()=>{
+document.body.style.filter="";
+},1000);
+
+}
+
+
+});
+
+function cosmicTransition(message, callback){
+
+let screen =
+document.getElementById("cosmicTransition");
+
+
+let text =
+document.getElementById("transitionMessage");
+
+
+text.innerHTML=message;
+
+
+screen.classList.add("active");
+
+
+setTimeout(()=>{
+
+screen.classList.remove("active");
+
+
+if(callback){
+callback();
+}
+
+
+},3500);
+
+
+}
 
 </script>
+
 
 </body>
 </html>
