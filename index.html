@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Starfire</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at 70% 30%, #24356b 0%, transparent 25%),
+    radial-gradient(circle at center,#111936,#02030a 70%);
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+/* étoiles */
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation:blink 3s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:.2;}
+}
+
+
+/* étoiles du curseur */
+
+.trail{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#9fe7ff;
+    border-radius:50%;
+    box-shadow:0 0 20px #9fe7ff;
+    pointer-events:none;
+    animation:trail .8s forwards;
+}
+
+@keyframes trail{
+    to{
+        transform:scale(0);
+        opacity:0;
+    }
+}
+
+
+/* Saturne */
+
+.saturn{
+    position:absolute;
+    right:-80px;
+    top:10%;
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    background:
+    radial-gradient(circle at 35% 35%,#f8dca0,#b47b45,#4d2d20);
+    box-shadow:0 0 80px rgba(255,190,100,.3);
+    animation:float 8s infinite alternate;
+}
+
+.ring{
+    position:absolute;
+    width:330px;
+    height:80px;
+    border:15px solid rgba(220,180,120,.6);
+    border-radius:50%;
+    top:75px;
+    left:-50px;
+    transform:rotate(-20deg);
+}
+
+
+@keyframes float{
+    from{transform:translateY(0)}
+    to{transform:translateY(25px)}
+}
+
+
+/* Vaisseau */
+
+.ship{
+    position:absolute;
+    left:-100px;
+    top:35%;
+    font-size:60px;
+    animation:fly 18s linear infinite;
+}
+
+@keyframes fly{
+    to{
+        left:110%;
+        transform:rotate(5deg);
+    }
+}
+
+
+/* interface */
+
+.center{
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+
+.panel{
+
+    max-width:650px;
+    text-align:center;
+    padding:40px;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,.12),
+    rgba(0,0,0,.55));
+
+    border:1px solid rgba(150,220,255,.35);
+    border-radius:25px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+    0 0 50px rgba(100,200,255,.15);
+}
+
+
+h1{
+    font-size:clamp(30px,7vw,55px);
+    margin-bottom:25px;
+}
+
+
+p{
+    font-size:clamp(17px,3vw,23px);
+    line-height:1.6;
+    min-height:130px;
+}
+
+
+button{
+
+    margin-top:20px;
+
+    padding:15px 45px;
+
+    border-radius:50px;
+    border:none;
+
+    background:#b7edff;
+
+    font-weight:bold;
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+button:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 30px #9fe7ff;
+}
+
+
+.hidden{
+    display:none;
+}
+
+
+.ghost{
+
+position:absolute;
+bottom:20px;
+width:100%;
+text-align:center;
+opacity:.5;
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="saturn">
+<div class="ring"></div>
+</div>
+
+
+<div class="ship">
+🚀
+</div>
+
+
+
+<div class="center">
+
+<div class="panel">
+
+
+<h1>
+✨ Guardian ✨
+</h1>
+
+
+<p id="text">
+
+I don't really want to play destiny...
+
+<br>
+
+but I want to play with you.
+
+</p>
+
+
+<button id="btn">
+Continue
+</button>
+
+
+</div>
+
+</div>
+
+
+<div class="ghost">
+👻 Ghost scan : "A special Guardian has been found."
+</div>
+
+
+
+<script>
+
+
+// étoiles du fond
+
+for(let i=0;i<180;i++){
+
+let star=document.createElement("div");
+
+star.className="star";
+
+star.style.left=Math.random()*100+"%";
+star.style.top=Math.random()*100+"%";
+star.style.animationDelay=Math.random()*3+"s";
+
+document.body.appendChild(star);
+
+}
+
+
+
+// étoiles curseur + tactile
+
+function starTrail(x,y){
+
+let s=document.createElement("div");
+
+s.className="trail";
+
+s.style.left=x+"px";
+s.style.top=y+"px";
+
+document.body.appendChild(s);
+
+setTimeout(()=>s.remove(),800);
+
+}
+
+
+document.addEventListener("mousemove",e=>{
+starTrail(e.clientX,e.clientY);
+});
+
+
+document.addEventListener("touchmove",e=>{
+
+let t=e.touches[0];
+
+starTrail(t.clientX,t.clientY);
+
+});
+
+
+
+
+// histoire
+
+let step=0;
+
+let story=[
+
+`
+Maybe I don't understand every weapon,
+every raid,
+or every legend...
+
+<br><br>
+
+But I know I want to discover
+the universe with you.
+
+<br><br>
+
+<i>Ghost update: New Fireteam member detected.</i>
+`,
+
+`
+
+I might pay for Destiny...
+
+<br><br>
+
+Consider it for our anniversary.
+
+Not only because it's a game...
+
+but because it's a little piece
+of your universe that I want to discover.
+
+`,
+
+`
+
+Saturn is your favorite planet...
+
+So if I could choose a place
+for our little adventure,
+
+I'd choose the stars.
+
+Somewhere between Saturn's rings
+and the Traveler's Light.
+
+`,
+
+`
+
+Every Guardian needs a Fireteam.
+
+And mine is you.
+
+<br><br>
+
+❤️ Mission complete:
+<br>
+Stay by your side forever.
+
+`
+
+];
+
+
+let btn=document.getElementById("btn");
+let text=document.getElementById("text");
+
+
+btn.onclick=()=>{
+
+if(step<story.length){
+
+text.innerHTML=story[step];
+
+step++;
+
+}
+
+else{
+
+btn.innerHTML="⭐ End of Mission ⭐";
+
+}
+
+};
+
+
+
+</script>
+
+</body>
+</html>
